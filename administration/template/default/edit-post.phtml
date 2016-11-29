@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Edit Post : {{ post.title }} - My Topic, My Opinion</title>
+		
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/styles.css" rel="stylesheet">
+		
+	<!--Icons-->
+	<script src="template/default/assets/js/lumino.glyphs.js"></script>
+		
+	<!--[if lt IE 9]>
+	<script src="template/default/assets/js/html5shiv.js"></script>
+	<script src="template/default/assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><span>My Topic, My Opinion</span>Dashboard</a>
+			<ul class="user-menu">
+				<li class="dropdown pull-right">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user }} <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				<li><a href="settings.php"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+				<li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Log Out</a></li>
+				</ul></li>
+			</ul>
+		</div>							
+	</div><!-- /.container-fluid -->
+</nav>
+		
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+	<ul class="nav menu">
+		<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg> Dashboard</a></li>
+		<li class="active"><a href="posts.php"><svg class="glyph stroked app window with content"><use xlink:href="#stroked-app-window-with-content"></use></svg> All Posts</a></li>
+		<li><a href="new-post.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Add New</a></li>
+		<li><a href="categories.php"><svg class="glyph stroked folder"><use xlink:href="#stroked-folder"></use></svg> Categories</a></li>
+		<li><a href="comments.php"><svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg> Comments</a></li>
+		<li><a href="users.php"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Users</a></li>
+		<li><a href="settings.php"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+		<li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Log Out</a></li>
+		<li role="presentation" class="divider"></li>
+	</ul>
+
+</div><!--/.sidebar-->
+		
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+	<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+			<li class="active">Edit Post : {{ post.title }}</li>
+		</ol>
+	</div><!--/.row-->
+								
+	<div class="row">
+		<div class="col-lg-12">
+		<div class="panel panel-default">
+		<div class="panel-heading">Edit Post : {{ post.title }}</div>
+		<div class="panel-body">
+		<div class="col-md-12">
+		<form role="form"  enctype="multipart/form-data"  action="edit-post.php?post={{ post.id }}"  method="post">
+									
+		<div class="form-group">
+		<label>Post Title</label>
+		<input type="text" name="title" value="{{ post.title | raw }}" id="title"  class="form-control" placeholder="Post Title" required="required"/>
+		</div>
+		
+		<div class="form-group">
+		<label>Post Subtitle</label>
+		<input type="text" name="subtitle" value="{{ post.subtitle | raw }}" id="subtitle"  class="form-control" placeholder="Post  Subtitle" required="required"/>
+		</div>
+
+		<div class="form-group">
+		<label>Category:</label>
+		<select name="category" style="width:100%">
+		{% for category in categories %}
+		<option value="{{ category.id }}" {% if post.category_id == category.id  %}selected{% endif %}>{{ category.title }}</option>
+	    	{% endfor %}
+	    	</select>
+		</div>
+		
+		<div class="form-group">
+		<label>Post Description</label>
+		<textarea name="description" id="description"  class="form-control"> {{ post.description }} </textarea>
+		</div>	
+		
+		<div class="form-group">
+		<label>Post Keywords</label>
+		<input type="text" name="keywords" value="{{ post.keywords }}" id="keywords"  class="form-control" placeholder="Keywords, Separated By Commas!" />
+		</div>
+		
+		<div class="form-group">
+		<label>Post Content</label>
+		<textarea name="content" id="content" class="form-control"  rows="10"> {{ post.content}} </textarea>
+		</div>
+
+		<div class="form-group">
+		<label>Post tags</label>
+		<input type="text" name="tags" value="{{ post.tags }}" id="tags"  class="form-control" placeholder="Post Tags Goes Here, Separated By Commas!" />
+		</div>
+		
+		<div class="form-group">
+		<label>Post Photo</label>
+		<input type="file"  name="photo"  id="photo" class="form-control" />
+		{% if post.photo != NULL %}
+		<img src="../uploads/posts/{{ post.photo }}"/>
+		{% endif %}
+		</div>
+		
+		<div class="form-group">
+		<label>Published:</label>
+		<select name="visible" style="width:100%">
+		<option value="1" {% if post.visible == 1 %}selected{% endif %}>Yes</option>
+		<option value="0" {% if post.visible == 0 %}selected{% endif %}>No</option>
+	    	</select>
+		</div>
+		
+		<button type="submit" name="submit" value="Save"  class="btn btn-paleutism pull-right">Save Changes</button>
+		</div>
+		</form>
+		</div>
+		</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->
+		
+	</div><!--/.main-->
+
+	<script type="text/javascript" src="template/default/assets/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript">
+	tinymce.init({
+	  selector: 'textarea',
+	  height: 200,
+	  plugins: [
+	    'advlist autolink lists link image charmap print preview anchor',
+	    'searchreplace visualblocks code fullscreen',
+	    'insertdatetime media table contextmenu paste code'
+	  ],
+	  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+	  content_css: [
+	    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+	    '//www.tinymce.com/css/codepen.min.css'
+	  ]
+	});	
+	</script>
+	<script src="template/default/assets/js/jquery-1.11.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

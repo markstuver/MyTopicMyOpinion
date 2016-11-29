@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ site.title }} - Search for {{ term |raw }}</title>
+	<meta name="description" content="Search for {{ term |raw }}">
+	<meta name="keywords" content="Search for {{ term |raw }}, {{ term |raw }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="{{ site.title }} - Search for {{ term |raw }}">
+	<meta property="og:description" content="Search for {{ term |raw }}">
+
+	<!-- FAVICON -->
+	<link rel="icon" type="image/x-icon" href="template/default/assets/img/favicon.ico" />
+
+	<!-- CSS & JS Library -->
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/animate.css" rel="stylesheet">
+	<link href="template/default/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/style.css" rel="stylesheet">
+	<script src="template/default/assets/js/jquery-1.11.1.js"></script>
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<?php include_once("template/default/assets/php/analyticstracking.php") ?>
+
+	<!-- Start Header -->
+	<header>
+		<!-- Start Logo -->
+		<div class="h-logo">
+			<a href="{{ site.url }}">
+			<img src="uploads/{{ site.logo }}" title="{{ site.title }}" alt="{{ site.title }}">
+			</a>
+		</div>
+		<!-- End Logo -->
+		
+		<!-- Start Menu -->
+		<nav class="navbar navbar-pale">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Menu</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+			<div id="navbar" class="navbar-collapse collapse">
+					{% include 'menu.phtml' %}
+			</div>
+			</div>
+		</nav>
+		<!-- End Menu -->
+		
+	</header>
+	<!-- End Header -->
+
+	<!-- Start Content -->
+	<div class="main">
+		<!-- Start Search Title  -->
+		<section class="main-t">
+			{% if (totalposts >= 1) and (term is not empty) %}
+			<h1> Search for {{ term |raw }} </h1>
+			<h4> {{ totalposts }} Result(s) Found for {{ term |raw }} </h4>
+			{% endif %}
+			{% if (totalposts == 0) or (term is empty) %}
+			<h1> Nothing found for "{{ term |raw }}" </h1>
+			<h4> Sorry, but nothing matched your search terms. Please try again with some different keywords. </h4>
+			{% endif %}
+		</section>
+		<!-- End Search Title -->
+
+		<div class="container">
+		<div class="row">
+
+
+		<div class="col-lg-9 col-md-8 col-xs-12 col-sm-12 main-content">
+		
+			{% if (totalposts == 0) or (term is empty) %}
+			<article class="main-d">
+			<div class="content">
+			<p> NOTHING FOUND FOR "{{ term |raw }}" </p>
+			<hr/>
+			<p>Sorry, but nothing matched your search terms. Please try again with some different keywords.</p>
+			<form method="get" action="search.php" id="search" >
+			<div class="searchblog">
+			<button type="submit">
+			<i class="fa fa-search"></i>
+			</button>
+			<div class="searchbox">
+			<input type="search" name="search" class="form-control" id="Search" placeholder="Search..." value="{{ term |raw }}">
+			</div>
+			</div>
+			</form>
+			</div>
+			</article>
+			{% endif %}
+			
+				{% if (totalposts >= 1) and (term is not empty) %}
+					{% for post in posts %}
+					<article class="main-d">
+						{% if post.photo != NULL %}
+						<div class="img">
+							<div class="main-hov">
+								<h5>{{ post.categorytitle }}</h5>
+							</div>
+							<img src="uploads/posts/{{ post.photo }}" title="{{ post.title }}" alt="{{ post.title }}">
+						</div>
+						{% endif %}
+						<div class="content">
+							<h2><span><a href="post.php?post={{ post.id }}">{{ post.title | raw }}</a></span></h2>
+							{{ post.description | raw }}
+							<div class="read-btn">
+								<a href="post.php?post={{ post.id }}" class="btn btn-paleutism btn-lg"> Read More... </a>
+							</div>
+						</div>
+						<div class="more-tabs">
+							<div class="article-date">
+							<p><strong>{{ post.date|date("M j") }}</strong></p><p>{{ post.date|date("Y") }}</p> 
+							</div>
+						</div>
+					</article>
+					{% endfor %}
+
+			
+					<!-- Start Pagination -->
+					{% if lastPage > 1 %}
+						<div class="pages">
+						{% if currentPage > 1 %}
+							<div class="pull-left">
+								<a href="{{ site.url }}/search.php?search={{ term }}&page={{ currentPage-1 }}"> &lt;&lt; Newer Posts </a>
+							</div>
+						{% endif %}
+						{% if currentPage < lastPage %}
+							<div class="pull-right">
+								<a href="{{ site.url }}/search.php?search={{ term }}&page={{ currentPage+1 }}"> Older Posts &gt;&gt; </a>
+							</div>
+						{% endif %}
+						</div>
+					{% endif %}
+					<!-- End Pagination -->
+				{% endif %}	
+				</div>
+			
+				{% include 'sidebar.phtml' %}
+			</div>	
+		</div>
+	
+	</div>
+	<!-- End Content -->
+	
+	<!-- Start Footer -->
+	<footer role="contentinfo">
+		<p>{{ site.copyright | raw }}</p> 
+		<a class="site-logo" href="{{ site.url }}">{{ site.title }}</a>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- JS Library -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/smoothscroll.js"></script>
+</body>
+</html>

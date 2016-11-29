@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Comments - My Topic, My Opinion</title>
+		
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/datepicker3.css" rel="stylesheet">
+	<link href="template/default/assets/css/bootstrap-table.css" rel="stylesheet">
+	<link href="template/default/assets/css/styles.css" rel="stylesheet">
+			
+	<!--Icons-->
+	<script src="template/default/assets/js/lumino.glyphs.js"></script>
+		
+	<!--[if lt IE 9]>
+	<script src="template/default/assets/js/html5shiv.js"></script>
+	<script src="template/default/assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><span>My Topic, My Opinion</span>Dashboard</a>
+			<ul class="user-menu">
+				<li class="dropdown pull-right">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ user }} <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				<li><a href="settings.php"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+				<li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Log Out</a></li>
+				</ul></li>
+			</ul>
+		</div>							
+	</div><!-- /.container-fluid -->
+</nav>
+		
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+	<ul class="nav menu">
+		<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg> Dashboard</a></li>
+		<li ><a href="posts.php"><svg class="glyph stroked app window with content"><use xlink:href="#stroked-app-window-with-content"></use></svg> All Posts</a></li>
+		<li><a href="new-post.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Add New</a></li>
+		<li><a href="categories.php"><svg class="glyph stroked folder"><use xlink:href="#stroked-folder"></use></svg> Categories</a></li>
+		<li class="active"><a href="comments.php"><svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg> Comments</a></li>
+		<li><a href="users.php"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Users</a></li>
+		<li><a href="settings.php"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
+		<li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Log Out</a></li>
+		<li role="presentation" class="divider"></li>
+	</ul>
+
+</div><!--/.sidebar-->
+		
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+	<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+			<li class="active">Comments</li>
+		</ol>
+	</div><!--/.row-->
+						
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Comments</div>
+					<div class="panel-body">
+						<table data-toggle="table" >
+						    <thead>
+						    <tr>
+								<th data-field="id"  data-sortable="true">ID</th> 
+								<th data-field="name" data-sortable="true">Name</th> 
+								<th data-field="email" data-sortable="true">Email</th> 
+								<th data-field="content" data-sortable="true">Content</th> 
+								<th data-field="date" data-sortable="true">Date Published</th> 
+								<th data-field="status">Status</th> 
+								<th data-field="delete" >Delete</th> 
+						</tr>
+						    
+						    </thead>
+						    <tbody> 
+							{% for comment in comments %}
+
+							    <tr style="display:none;" data-index="0">
+							    <td>{{ comment.id }}</td>
+							    <td style="">{{ comment.author }}</td>
+							    <td style="">{{ comment.author_email }}</td>
+							    <td style="">{{ comment.content }}</td>
+							    <td style="">{{ comment.date|date("F jS, Y") }}</td>
+								<td>
+								{% if comment.status == 0 %}
+								<a href="actions/comment.php?approve={{ comment.id }}">Approve</a>
+								{% elseif comment.status == 1 %}
+								<a href="actions/comment.php?disapprove={{ comment.id }}">Disapprove</a>
+								{% endif %}
+								</td>
+			
+			<td>
+			<a href="delete/delete-comment.php?comment={{ comment.id }}" onclick="return confirm('Are you sure you want to delete this comment?');" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
+			</td>
+
+							    </tr>
+							    	{% endfor %}
+						    </tbody>
+						</table>
+		<br>
+			<div class="pages">
+			{% if lastPage > 1 %}
+			{% if currentPage > 1 %}
+			<div class="pull-left">
+			<a href="comments.php?page={{ currentPage-1 }}"> &lt;&lt; Newer Comments </a>
+			</div>
+			{% endif %}
+			{% if currentPage < lastPage %}
+			<div class="pull-right">
+			<a href="comments.php?page={{ currentPage+1 }}"> Older Comments &gt;&gt; </a>
+			</div>
+			{% endif %}
+			{% endif %}	
+			</div>
+
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->	
+		
+		
+	</div><!--/.main-->
+
+	<script src="template/default/assets/js/jquery-1.11.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/chart.min.js"></script>
+	<script src="template/default/assets/js/chart-data.js"></script>
+	<script src="template/default/assets/js/easypiechart.js"></script>
+	<script src="template/default/assets/js/easypiechart-data.js"></script>
+	<script src="template/default/assets/js/bootstrap-datepicker.js"></script>
+	<script src="template/default/assets/js/bootstrap-table.js"></script>
+	<script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
+				$(this).find('em:first').toggleClass("glyphicon-minus");	  
+			}); 
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>	
+</body>
+</html>

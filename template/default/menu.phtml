@@ -1,0 +1,7 @@
+<ul class="nav navbar-nav">
+<li {% if page == "home"  %} class="active"{% endif %}><a href="{{ site.url }}">Home</a></li>
+{% for item in menu %}
+<li {% if item.id == category.id %} class="active" {% endif %}><a href="{% if site.permalink_structure == '0' %}category/{{ item.id }}.html{% else %}category/{{ item.slug }}.html{% endif %}">{{ item.title }}</a></li>
+{% endfor %}
+<li  {% if page == "contact" %} class="active"{% endif %}><a href="contactus.php">Contact Us</a></li>
+</ul>

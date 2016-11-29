@@ -1,0 +1,18 @@
+<!doctype html>
+<title>Site Maintenance</title>
+<style>
+  body { text-align: center; padding: 150px; }
+  h1 { font-size: 50px; font-weight: bolder }
+  body { font: 25px Helvetica, sans-serif; color: #000;text-align: center; }
+  article { display: block; text-align: center; width: 800px; margin: 0 auto; }
+  a { color: #dc8100; text-decoration: none; }
+  a:hover { color: #333; text-decoration: none; }
+</style>
+
+<article>
+    <h1>We&rsquo;ll be back soon!</h1>
+    <div>
+        <p>Sorry for the inconvenience<br>
+but we&rsquo;re performing some maintenance at the moment.</p>
+    </div>
+</article>

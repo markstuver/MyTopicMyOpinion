@@ -1,0 +1,12 @@
+
+#RewriteBase /
+#RewriteCond %{REMOTE_ADDR} !^76\.188\.199\.87$
+#RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+#RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif) [NC]
+#RewriteRule ^(.*)$ http://mytopicmyopinion.com/maintenance.html [R=307,L]
+
+RewriteEngine On
+RewriteRule ^([^/]*)\.html$ post.php?post=$1 [L]
+RewriteRule ^category/([^/]*)\.html$ category.php?category=$1 [L]
+RewriteRule ^category/([^/]*)/page/([^/]*)\.html$ category.php?category=$1&page=$2 [L]
+

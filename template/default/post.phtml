@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ site.title }} - {{ post.title }}</title>
+	<meta name="description" content="{{ post.description|striptags }}">
+	<meta name="keywords" content="{{ post.keywords }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="{{ post.title }}">
+	<meta property="og:description" content="{{ post.description|striptags }}">
+	{% if post.photo != NULL %}
+	<meta property="og:image" content="{{ site.url }}uploads/posts/{{ post.photo }}" />
+	{% endif %}
+
+	<!-- FAVICON -->
+	<link rel="icon" type="image/x-icon" href="template/default/assets/img/favicon.ico" />
+
+	<!-- CSS & JS Library -->
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/animate.css" rel="stylesheet">
+	<link href="template/default/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/style.css" rel="stylesheet">
+	<script src="template/default/assets/js/jquery-1.11.1.js"></script>
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<?php include_once("template/default/assets/php/analyticstracking.php") ?>
+
+	<!-- Start Header -->
+	<header>
+		<!-- Start Logo -->
+		<div class="h-logo">
+			<a href="{{ site.url }}">
+			<img src="uploads/{{ site.logo }}" title="{{ site.title }}" alt="{{ site.title }}">
+			</a>
+		</div>
+		<!-- End Logo -->
+		
+		<!-- Start Menu -->
+		<nav class="navbar navbar-pale">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Menu</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+			<div id="navbar" class="navbar-collapse collapse">
+					{% include 'menu.phtml' %}
+			</div>
+			</div>
+		</nav>
+		<!-- End Menu -->
+		
+	</header>
+	<!-- End Header -->
+	
+	<!-- Start Content -->
+
+	<div class="main">
+		<!-- Start Post Title and Subtitle -->	
+		<section class="main-t">
+			<h1> {{ post.title }} </h1>
+			<h4> {{ post.subtitle }} </h4>
+		</section>
+		<!-- End Post Title and Subtitle -->	
+		
+		<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-9 col-md-8 col-xs-12 col-sm-12">
+
+				<article class="main-d post">
+					{% if post.photo != NULL %}
+					<div class="img">
+					<img src="uploads/posts/{{ post.photo }}" title="{{ post.title }}" alt="{{ post.title }}">
+					<div class="share">
+					<div class="activ-s">
+					<ul class="btn-s">
+					<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}"><i class="fa fa-facebook"></i> </a></li>
+					<li><a target="_blank" href="https://twitter.com/intent/tweet?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}&text={{ post.title }}"><i class="fa fa-twitter"></i> </a></li>
+					<li><a target="_blank" href="https://plus.google.com/share?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}"><i class="fa fa-google-plus"></i></a></li>
+					<li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}&title={{ post.title }}"><i class="fa fa-linkedin"></i></a></li>
+					<li><a target="_blank" href="http://reddit.com/submit?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}"><i class="fa fa-reddit"></i></a></li>
+					<li><a target="_blank" href="mailto:?subject={{ post.title }}&body={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}"><i class="fa fa-envelope-o"></i></a></li>
+					</ul>
+					<i class="fa fa-share-alt"></i>
+					</div>
+					</div>
+					</div>
+					{% endif %}
+
+					<div class="content post">
+						<h2><span>{{ post.title }}</span></h2>
+						{{ post.content | raw }}
+						</br>
+						<h3><span>Share this entry</span></h3>
+						<a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="icon-link facebook fill"><i class="fa fa-facebook"></i></a>
+						<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}&title={{ post.title }}" class="icon-link linkedin fill"><i class="fa fa-linkedin"></i></a>
+						<a href="https://twitter.com/intent/tweet?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}&text={{ post.title }}" class="icon-link twitter fill"><i class="fa fa-twitter"></i></a>
+						<a href="https://plus.google.com/share?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="icon-link google-plus fill"><i class="fa fa-google-plus"></i></a>
+						<a href="http://reddit.com/submit?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="icon-link reddit fill"><i class="fa fa-reddit"></i></a>
+						<a href="http://www.tumblr.com/share/link?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="icon-link tumblr fill"><i class="fa fa-tumblr"></i></a>						
+						<a href="http://pinterest.com/pin/create/button/?url={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}&media={{ site.url }}uploads/posts/{{ post.photo }}" class="icon-link pinterest fill"><i class="fa fa-pinterest"></i></a>
+						<a href="mailto:?subject={{ post.title }}&body={{ site.url }}{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="icon-link envelope fill"><i class="fa fa-envelope"></i></a>
+					</div>
+					{% include 'comments.phtml' %}
+				
+				</article>
+
+			</div>
+
+			{% include 'sidebar.phtml' %}
+
+		</div>
+
+		</div>
+	</div>
+	<!-- End Content -->
+
+	<!-- Start Footer -->
+	<footer role="contentinfo">
+		<p>{{ site.copyright | raw }}</p> 
+		<a class="site-logo" href="{{ site.url }}">{{ site.title }}</a>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- JS Library -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/smoothscroll.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+[29-Aug-2016 15:46:46 UTC] PHP Fatal error:  Call to a member function addGlobal() on a non-object in /home/plankdennis4221/public_html/index.php on line 18
+[29-Aug-2016 15:46:48 UTC] PHP Fatal error:  Call to a member function addGlobal() on a non-object in /home/plankdennis4221/public_html/index.php on line 18

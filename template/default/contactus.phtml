@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ site.title }} - Contact Us</title>
+	<meta name="description" content="{{ site.description|striptags }}">
+	<meta name="keywords" content="{{ site.keywords }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="{{ site.title }}">
+	<meta property="og:description" content="{{ site.description|striptags }}">
+	
+	<!-- FAVICON -->
+	<link rel="icon" type="image/x-icon" href="template/default/assets/img/favicon.ico" />
+
+	<!-- CSS & JS Library -->
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/animate.css" rel="stylesheet">
+	<link href="template/default/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/style.css" rel="stylesheet">
+	<script src="template/default/assets/js/jquery-1.11.1.js"></script>
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<?php include_once("template/default/assets/php/analyticstracking.php") ?>
+
+	<!-- Start Header -->
+	<header>
+		<!-- Start Logo -->
+		<div class="h-logo">
+			<a href="{{ site.url }}">
+			<img src="uploads/{{ site.logo }}" title="{{ site.title }}" alt="{{ site.title }}">
+			</a>
+		</div>
+		<!-- End Logo -->
+		
+		<!-- Start Menu -->
+		<nav class="navbar navbar-pale">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Menu</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+			<div id="navbar" class="navbar-collapse collapse">
+					{% include 'menu.phtml' %}
+			</div>
+			</div>
+		</nav>
+		<!-- End Menu -->
+		
+	</header>
+	<!-- End Header -->
+	
+	<!-- Start Content -->
+	<div class="main">
+		<!-- Start Page Title and Subtitle -->	
+		<section class="main-t">
+		<h1> Contact Us </h1>
+		<h4> </h4>
+		</section>
+		<!-- End Page Title and Subtitle -->	
+
+		<div class="container">
+		
+		{% if message == true  %}
+		<h1 class="success">Your Message Has Been Successfully Sent!</h1>
+		{% endif %} 	
+
+
+
+
+
+
+
+		<article class="col-12 main-d col-centered">
+		<div class="content contact">
+		<div class="row">
+		<!-- Start Contact Us form -->	
+		<div class="col-lg-8 col-md-6 col-xs-12">
+		<h1>Contact Us</h1>
+			<form class="form-horizontal" action="contactus.php" method="POST"> 
+			        <input type="hidden" name="action" value="submit"> 
+				<input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email" required="required">
+				<input type="text" name="name" class="form-control" id="inputname3" placeholder="Name" required="required">
+				<input type="text" name="subject" class="form-control" id="inputsubjec3" placeholder="Subject" required="required">
+				<textarea type="text" name="message" class="form-control" id="inputtext3" placeholder="Message" required></textarea>
+				<p class="antispam">
+				<br /><input name="url" placeholder="Leave This Empty" /></p>
+				<button type="submit" class="btn btn-paleutism">Send</button>
+			</form>
+		</div>
+		<!-- End Contact Us form -->
+			
+		<!-- Start Contact Information -->	
+		<!--<div class="col-lg-4 col-md-6 col-xs-12">
+			<h4>Contact Info</h4>
+			<p>{{ site.city }}, {{ site.country }}</p>
+			<p>{{ site.address }}</p>
+			<p>{{ site.name }}</p>
+			<hr/>
+			<ul>
+				<li><p><strong>Phone:</strong> {{ site.phone }}</p></li>
+				<li><p><strong>Email:</strong> {{ site.email }}</p></li>
+			</ul>
+			<hr/>
+		</div>-->
+		<!-- End Contact Information -->	
+	
+		</div>
+		</div>
+		</article>
+		</div>
+	</div>
+	<!-- End Content -->
+
+	<!-- Start Footer -->
+	<footer role="contentinfo">
+		<p>{{ site.copyright | raw }}</p> 
+		<a class="site-logo" href="{{ site.url }}">{{ site.title }}</a>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- JS Library -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/smoothscroll.js"></script>
+</body>
+</html>

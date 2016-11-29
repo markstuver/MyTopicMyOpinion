@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ site.title }} - {{ category.title }}</title>
+	<meta name="description" content="{{ category.description|striptags }}">
+	<meta name="keywords" content="{{ category.keywords }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="{{ site.title }} - {{ category.title }}">
+	<meta property="og:description" content="{{ category.description|striptags }}">
+	<base href="{{ site.url }}">
+
+	<!-- FAVICON -->
+	<link rel="icon" type="image/x-icon" href="template/default/assets/img/favicon.ico" />
+
+	<!-- CSS & JS Library -->
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/animate.css" rel="stylesheet">
+	<link href="template/default/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/style.css" rel="stylesheet">
+	<script src="template/default/assets/js/jquery-1.11.1.js"></script>
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<?php include_once("template/default/assets/php/analyticstracking.php") ?>
+	<!-- Start Header -->
+	<header>
+		<!-- Start Logo -->
+		<div class="h-logo">
+			<a href="{{ site.url }}">
+			<img src="uploads/{{ site.logo }}" title="{{ site.title }}" alt="{{ site.title }}">
+			</a>
+		</div>
+		<!-- End Logo -->
+		
+		<!-- Start Menu -->
+		<nav class="navbar navbar-pale">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Menu</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+			<div id="navbar" class="navbar-collapse collapse">
+					{% include 'menu.phtml' %}
+			</div>
+			</div>
+		</nav>
+		<!-- End Menu -->
+		
+	</header>
+	<!-- End Header -->
+	
+	<!-- Start Content -->
+	<div class="main">
+		<!-- Start Category Title and Description -->
+		<section class="main-t">
+			<h1> {{ category.title }} </h1>
+			<h4> {{ category.description|raw }} </h4>
+		</section>
+		<!-- End Category Title and Description -->
+		
+		<div class="container">
+			<div class="row">
+		
+				<div class="col-lg-9 col-md-8 col-xs-12 col-sm-12 main-content">	
+					<!-- Start Posts Loop -->
+					{% for post in posts %}
+					<article class="main-d">
+						{% if post.photo != NULL %}
+						<div class="img">
+							<div class="main-hov">
+								<h5>{{ category.title }}</h5>
+							</div>
+							<a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}">
+								<img src="uploads/posts/{{ post.photo }}" title="{{ post.title }}" alt="{{ post.title }}">
+							</a>
+						</div>
+						{% endif %}
+						<div class="content">
+							<h2><span><a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}">{{ post.title | raw }}</a></span></h2>
+							{{ post.description | raw }}
+							<div class="read-btn">
+								
+								<a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="btn btn-paleutism btn-lg"> Read More... </a>								
+							</div>
+						</div>
+						<div class="more-tabs">
+							<div class="article-date">
+							<p><strong>{{ post.date|date("M j") }}</strong></p><p>{{ post.date|date("Y") }}</p> 
+							</div>
+						</div>
+					</article>
+					{% else %}
+					<article class="main-d">
+						<div class="content">
+							<p> No Posts Found in  {{ category.title }} </p>
+							</hr>
+							<p>Sorry, but No posts found in  {{ category.title }}. Feel free to search our website.</p>
+						<form method="get" action="search.php" id="search">
+							<div class="searchblog">
+								<button type="submit">
+								<i class="fa fa-search"></i>
+								</button>
+							<div class="searchbox">
+								<input type="search" name="search" class="form-control" id="Search" placeholder="Search..." value="">
+							</div>
+							</div>
+						</form>
+						</div>
+					</article>
+					{% endfor %}
+					<!-- End Posts Loop -->
+				
+					<!-- Start Pagination -->
+					{% if lastPage > 1 %}
+						<div class="pages">
+						{% if currentPage > 1 %}
+							<div class="pull-left">
+								<a href="{% if site.permalink_structure == '0' %}category/{{ category.id }}{% else %}category/{{ category.slug }}{% endif %}/page/{{ currentPage-1 }}.html"> &lt;&lt; Newer Posts </a>
+								
+
+							</div>
+						{% endif %}
+						{% if currentPage < lastPage %}
+							<div class="pull-right">
+								<a href="{% if site.permalink_structure == '0' %}category/{{ category.id }}{% else %}category/{{ category.slug }}{% endif %}/page/{{ currentPage+1 }}.html"> Older Posts &gt;&gt; </a>
+							</div>
+						{% endif %}
+						</div>
+					{% endif %}
+					<!-- End Pagination -->
+				</div>
+				
+				{% include 'sidebar.phtml' %}
+			</div>	
+		</div>
+	
+	</div>
+	<!-- End Content -->
+
+	<!-- Start Footer -->
+	<footer role="contentinfo">
+		<p>{{ site.copyright | raw }}</p> 
+		<a class="site-logo" href="{{ site.url }}">{{ site.title }}</a>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- JS Library -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/smoothscroll.js"></script>
+</body>
+</html>

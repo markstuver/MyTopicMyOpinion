@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ site.title }}</title>
+	<meta name="description" content="{{ site.description|striptags }}">
+	<meta name="keywords" content="{{ site.keywords }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="{{ site.title }}">
+	<meta property="og:description" content="{{ site.description|striptags }}">
+	
+	<!-- FAVICON -->
+	<link rel="icon" type="image/x-icon" href="template/default/assets/img/favicon.ico" />
+
+	<!-- CSS & JS Library -->
+	<link href="template/default/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/animate.css" rel="stylesheet">
+	<link href="template/default/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="template/default/assets/css/style.css" rel="stylesheet">
+	<script src="template/default/assets/js/jquery-1.11.1.js"></script>
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<?php include_once("template/default/assets/php/analyticstracking.php") ?>
+
+	<!-- Start Header -->
+	<header>
+		<!-- Start Logo -->
+		<div class="h-logo">
+        
+                           
+			<a href="{{ site.url }}">
+			<img src="uploads/{{ site.logo }}" title="{{ site.title }}" alt="{{ site.title }}">
+			</a>
+		</div>
+		<!-- End Logo -->
+        <!-- Start Intro Text -->
+        
+       
+       <div class="introText"> 
+        Welcome to my little corner of the world. As the above title implies, I will be opining on subjects of my choosing. The purpose
+		of my writing this blog is not to serve my vanity but to initiate an awareness of or bring some light (and maybe a bit of heat)
+		to issues which I believe some people may wish to think about.<br>
+        <br>
+		Choosing to add my voice to the already crowded ether is not necessarily because I think my ideas or opinions are superior. Rather,
+		I want to discuss a variety of subjects and appeal to individuals who enjoy pondering diverse viewpoints or reading what might be
+		thought-provoking commentary. I hope, in my meager efforts, I can create a small spot in the Web world where these individuals can find
+		such stimulation. We will see how it works out.<br>
+        <div class="introByLine">
+        - Sagittarius<br><br>
+        </div>
+        <br><br><br>
+        </div>
+        
+<!-- End Intro Text -->
+        
+        
+		<!-- Start Menu -->
+		<nav class="navbar navbar-pale">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Menu</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+			<div id="navbar" class="navbar-collapse collapse">
+					{% include 'menu.phtml' %}
+			</div>
+			</div>
+		</nav>
+		<!-- End Menu -->
+		
+	</header>
+	<!-- End Header -->
+
+	<!-- Start Content -->
+	<div class="main">
+		<!-- Start Category Title and Description -->
+		<section class="main-t">
+        
+			<!--<h1> {{ site.title }} </h1>
+			<h4> {{ site.description }} </h4>-->
+		</section>
+		<!-- End Category Title and Description -->
+		
+		<div class="container">
+			<div class="row">
+		
+				<div class="col-lg-9 col-md-8 col-xs-12 col-sm-12 main-content">	
+					<!-- Start Posts Loop -->
+					{% for post in posts %}
+					<article class="main-d">
+						{% if post.photo != NULL %}
+						<div class="img">
+							<div class="main-hov">
+								<h5>{{ post.categorytitle }}</h5>
+							</div>
+							<a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}">
+							<img src="uploads/posts/{{ post.photo }}" title="{{ post.title }}" alt="{{ post.title }}">
+							</a>
+						</div>
+						{% endif %}
+						<div class="content">
+							<h2><span><a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}">{{ post.title | raw }}</a></span></h2>
+							{{ post.description | raw }}
+							<div class="read-btn">
+								<a href="{% if site.permalink_structure == '0' %}{{ post.id }}.html{% else %}{{ post.slug }}.html{% endif %}" class="btn btn-paleutism btn-lg"> Read More... </a>								
+							</div>
+						</div>
+						<div class="more-tabs">
+							<div class="article-date">
+							<p><strong>{{ post.date|date("M j") }}</strong></p><p>{{ post.date|date("Y") }}</p> 
+							</div>
+						</div>
+					</article>
+					{% endfor %}
+					<!-- End Posts Loop -->
+				
+					<!-- Start Pagination -->
+					{% if lastPage > 1 %}
+						<div class="pages">
+						{% if currentPage > 1 %}
+							<div class="pull-left">
+								<a href="{{ site.url }}index.php?page={{ currentPage-1 }}"> &lt;&lt; Newer Posts </a>
+							</div>
+						{% endif %}
+						{% if currentPage < lastPage %}
+							<div class="pull-right">
+								<a href="{{ site.url }}index.php?page={{ currentPage+1 }}"> Older Posts &gt;&gt; </a>
+							</div>
+						{% endif %}
+						</div>
+					{% endif %}
+					<!-- End Pagination -->
+				</div>
+				
+				{% include 'sidebar.phtml' %}
+			</div>	
+		</div>
+	
+	</div>
+	<!-- End Content -->
+
+	<!-- Start Footer -->
+	<footer role="contentinfo">
+		<p>{{ site.copyright | raw }}</p> 
+		<a class="site-logo" href="{{ site.url }}">{{ site.title }}</a>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- JS Library -->
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="template/default/assets/js/bootstrap.min.js"></script>
+	<script src="template/default/assets/js/smoothscroll.js"></script>
+</body>
+</html>
